@@ -1,3 +1,5 @@
+let socket = io();
+
 function createCard(name, desc, img) {
     return `
         <div class="col s4">
@@ -24,7 +26,7 @@ const submitForm = () => {
         img: $('#card_img').val() // Provide a default image URL or fetch from user input
     };
 
-    // Send form data to the server
+    
     $.post('/api/addCard', formData, (response) => {
         if (response.statusCode == 200) {
             getcards();
@@ -61,5 +63,10 @@ $(document).ready(function () {
     $('.modal').modal();
     $('#formSubmit').click(() => {
         submitForm();
+        alert("Card posted successfully");
     })
+
+    socket.on('randomNumber', (msg) => {
+        console.log('Random Number: ' + msg);
+    });
 });
